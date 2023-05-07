@@ -15,7 +15,7 @@ async function init() {
                 type: "list",
                 name: "choice",
                 message: "What would you like to do next?",
-                choices: ["View all employees", "View all roles", "View all departments", "Quit"]
+                choices: ["View all employees", "View all roles", "View all departments", "Add department", "Add role", "Add employee", "Update employee role", "Quit"]
             }
         ]);
         if (choice === "Quit") {
@@ -29,23 +29,21 @@ async function init() {
         } else if (choice === "View all departments") {
             let departments = await data.getDepartments();
             console.log(cTable.getTable(departments));
+        } else if (choice === "Add department"){
+            let newDepartment = await data.addDepartment();
+            console.log(`${newDepartment} has been added to the database`);
+        } else if (choice === "Add role"){
+            let newRole = await data.addRole();
+            console.log(`${newRole} has been added to the database`);
+        } else if (choice === "Add employee"){
+            let newEmployee = await data.addEmployee();
+            console.log(`${newEmployee} has been added to the database`);
+        } else if (choice === "Update employee role"){
+            let updatedRole = await data.updateRole();
+            console.log(`${updatedRole}'s role has been updated`);
         }
     }
     await data.close();
-    //
-    // const res = await axios.get(`https://manateejokesapi.herokuapp.com/manatees/random`);
-    // const fileIRead = await read('log.json', 'utf-8');
-    // console.log(fileIRead);
-    // const jokeArr = JSON.parse(fileIRead);
-    // const newItem = {
-    //     user: ans.user,
-    //     setup: res.data.setup,
-    //     punchline: res.data.punchline
-    // }
-    // jokeArr.push(newItem);
-    // console.log(jokeArr);
-    // await write("log.json", JSON.stringify(jokeArr, null, 4))
-    // console.log('done');
 }
 
 init();
