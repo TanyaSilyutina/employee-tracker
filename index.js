@@ -15,32 +15,52 @@ async function init() {
                 type: "list",
                 name: "choice",
                 message: "What would you like to do next?",
-                choices: ["View all employees", "View all roles", "View all departments", "Add department", "Add role", "Add employee", "Update employee role", "Quit"]
+                choices: [
+                    "View all employees", "View all roles", "View all departments", "View employees by manager", "View employees by department", "View department's budget",
+                    "Add department", "Add role", "Add employee",
+                    "Update employee role", "Update employee manager",
+                    "Delete",
+                    "Quit"
+                ]
             }
         ]);
         if (choice === "Quit") {
             break;
         } else if (choice === "View all employees") {
-            let employees = await data.getEmployees();
+            const employees = await data.getEmployees();
             console.log(cTable.getTable(employees));
         } else if (choice === "View all roles") {
-            let roles = await data.getRoles();
+            const roles = await data.getRoles();
             console.log(cTable.getTable(roles));
         } else if (choice === "View all departments") {
-            let departments = await data.getDepartments();
+            const departments = await data.getDepartments();
             console.log(cTable.getTable(departments));
+        } else if (choice === "View employees by manager"){
+            const employees = await data.getEmployeesByManager();
+            console.log(cTable.getTable(employees));
+        } else if(choice === "View employees by department"){
+            const employees = await data.getEmployeesByDepartment();
+            console.log(cTable.getTable(employees));
         } else if (choice === "Add department"){
-            let newDepartment = await data.addDepartment();
+            const newDepartment = await data.addDepartment();
             console.log(`${newDepartment} has been added to the database`);
         } else if (choice === "Add role"){
-            let newRole = await data.addRole();
+            const newRole = await data.addRole();
             console.log(`${newRole} has been added to the database`);
         } else if (choice === "Add employee"){
-            let newEmployee = await data.addEmployee();
+            const newEmployee = await data.addEmployee();
             console.log(`${newEmployee} has been added to the database`);
         } else if (choice === "Update employee role"){
-            let updatedRole = await data.updateRole();
+            const updatedRole = await data.updateRole();
             console.log(`${updatedRole}'s role has been updated`);
+        } else if (choice === "Update employee manager"){
+            const updatedEmployee = await data.updateManagers();
+            console.log(`${updatedEmployee}'s manager has been updated`);
+        } else if(choice === "Delete"){
+           await data.delete();
+        } else if (choice === "View department's budget"){
+            const budget = await data.budget();
+            console.log(cTable.getTable(budget));
         }
     }
     await data.close();
